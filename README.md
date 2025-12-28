@@ -235,9 +235,7 @@ This project is licensed under the **MIT License** - see the [LICENSE](LICENSE) 
 
 Found a bug or have a feature suggestion?
 
-- 🐞 **Report Bugs:** [Open an Issue](https://github.com/HadyMohamedElhadyHassan/FamilyShield/issues)
-- 💡 **Feature Ideas:** [Start a Discussion](https://github.com/HadyMohamedElhadyHassan/FamilyShield/discussions)
-
+- 💡 **Feature Ideas:** [Open an Issue](https://github.com/HadyMohamedElhadyHassan/FamilyShield/issues)
 ---
 
 ## ☕ Support Development
@@ -303,6 +301,7 @@ This extension was developed as an educational project to demonstrate:
 ⭐ If you like this project, give it a star! ⭐
 
 </div>
+
 
 
 
