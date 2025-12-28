@@ -1,0 +1,247 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Access Blocked - BrowseGuard</title>
+  <style>
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+    body {
+      font-family: 'Segoe UI', -apple-system, BlinkMacSystemFont, sans-serif;
+      background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      min-height: 100vh;
+      color: white;
+      padding: 20px;
+    }
+    .container {
+      text-align: center;
+      background: rgba(255, 255, 255, 0.15);
+      backdrop-filter: blur(20px);
+      padding: 50px 40px;
+      border-radius: 24px;
+      box-shadow: 0 8px 32px 0 rgba(31, 38, 135, 0.4), 
+                  0 0 0 1px rgba(255, 255, 255, 0.2);
+      max-width: 550px;
+      width: 100%;
+      animation: slideIn 0.6s cubic-bezier(0.16, 1, 0.3, 1);
+    }
+    @keyframes slideIn {
+      from {
+        opacity: 0;
+        transform: translateY(-40px) scale(0.95);
+      }
+      to {
+        opacity: 1;
+        transform: translateY(0) scale(1);
+      }
+    }
+    .icon-wrapper {
+      width: 100px;
+      height: 100px;
+      margin: 0 auto 25px;
+      background: rgba(255, 255, 255, 0.2);
+      border-radius: 50%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      animation: pulse 2s infinite;
+      box-shadow: 0 4px 20px rgba(0, 0, 0, 0.2);
+    }
+    @keyframes pulse {
+      0%, 100% { transform: scale(1); }
+      50% { transform: scale(1.05); }
+    }
+    .icon {
+      font-size: 60px;
+      filter: drop-shadow(0 2px 8px rgba(0,0,0,0.2));
+    }
+    h1 {
+      font-size: 2rem;
+      margin-bottom: 12px;
+      font-weight: 700;
+      text-shadow: 0 2px 10px rgba(0, 0, 0, 0.2);
+      letter-spacing: -0.5px;
+    }
+    .message {
+      font-size: 1rem;
+      margin-bottom: 25px;
+      opacity: 0.95;
+      line-height: 1.6;
+      font-weight: 400;
+    }
+    .blocked-url {
+      background: rgba(0, 0, 0, 0.25);
+      padding: 16px 20px;
+      border-radius: 12px;
+      margin: 25px 0;
+      word-break: break-all;
+      font-family: 'Consolas', 'Monaco', monospace;
+      font-size: 0.85rem;
+      border: 1px solid rgba(255, 255, 255, 0.15);
+      max-height: 80px;
+      overflow-y: auto;
+      text-align: left;
+    }
+    .blocked-url::-webkit-scrollbar {
+      width: 6px;
+    }
+    .blocked-url::-webkit-scrollbar-thumb {
+      background: rgba(255, 255, 255, 0.3);
+      border-radius: 3px;
+    }
+    .reason-badge {
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      background: rgba(239, 68, 68, 0.25);
+      padding: 12px 24px;
+      border-radius: 50px;
+      margin: 20px 0;
+      font-weight: 600;
+      border: 2px solid rgba(239, 68, 68, 0.4);
+      font-size: 0.9rem;
+      box-shadow: 0 4px 12px rgba(239, 68, 68, 0.2);
+    }
+    .btn-back {
+      margin-top: 30px;
+      padding: 16px 40px;
+      background: white;
+      color: #667eea;
+      border: none;
+      border-radius: 50px;
+      font-size: 1rem;
+      font-weight: 700;
+      cursor: pointer;
+      transition: all 0.3s cubic-bezier(0.16, 1, 0.3, 1);
+      box-shadow: 0 4px 20px rgba(0, 0, 0, 0.15);
+      text-transform: uppercase;
+      letter-spacing: 0.5px;
+    }
+    .btn-back:hover {
+      transform: translateY(-3px);
+      box-shadow: 0 8px 25px rgba(0, 0, 0, 0.25);
+      background: #f8f9fa;
+    }
+    .btn-back:active {
+      transform: translateY(-1px);
+    }
+    .footer {
+      margin-top: 35px;
+      font-size: 0.8rem;
+      opacity: 0.8;
+      font-weight: 500;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 8px;
+    }
+    .shield-icon {
+      font-size: 1rem;
+    }
+  </style>
+</head>
+<body>
+  <div class="container">
+    <div class="icon-wrapper">
+      <div class="icon" id="iconEmoji">🚫</div>
+    </div>
+    <h1 id="title">Access Blocked</h1>
+    <p class="message" id="message">
+      Sorry, this website is blocked by Vault Pro
+    </p>
+    <div class="blocked-url" id="blockedUrl">
+      Loading...
+    </div>
+    <div class="reason-badge" id="reason">
+      ⚠️ Blocked Site
+    </div>
+    <button class="btn-back" onclick="goBack()" id="btnBack">Go Back</button>
+    <div class="footer">
+      <span class="shield-icon">🛡️</span>
+      <span id="footerText">BrowseGuard - Advanced Protection</span>
+    </div>
+  </div>
+
+  <script>
+    // استخراج المعلومات من الرابط
+    const params = new URLSearchParams(window.location.search);
+    const blockedUrl = params.get('url') || 'Unknown';
+    const reason = params.get('reason') || 'blacklist';
+    const lang = params.get('lang') || 'en';
+
+    // الترجمات المحسنة
+    const translations = {
+      ar: {
+        title: 'تم حظر هذه الصفحة',
+        messageBlacklist: 'عذراً، هذا الموقع محظور بواسطة BrowseGuard',
+        messageWhitelist: 'عذراً، هذا الموقع غير مسموح بالوصول إليه',
+        reasonBlacklist: '⚠️ موقع محظور (القائمة السوداء)',
+        reasonWhitelist: '🔒 غير مسموح (القائمة البيضاء فقط)',
+        btnBack: 'العودة للصفحة السابقة',
+        footer: 'BrowseGuard - حماية متقدمة للتصفح الآمن',
+        loading: 'جاري التحميل...'
+      },
+      en: {
+        title: 'Access Blocked',
+        messageBlacklist: 'Sorry, this website is blocked by BrowseGuard',
+        messageWhitelist: 'Sorry, this website is not in your allowed list',
+        reasonBlacklist: '⚠️ Blocked Site (Blacklist)',
+        reasonWhitelist: '🔒 Not Allowed (Whitelist Only)',
+        btnBack: 'Go Back',
+        footer: 'BrowseGuard - Advanced Protection',
+        loading: 'Loading...'
+      },
+      zh: {
+        title: '访问被阻止',
+        messageBlacklist: '抱歉，此网站已被 BrowseGuard 阻止',
+        messageWhitelist: '抱歉，此网站不在您的允许列表中',
+        reasonBlacklist: '⚠️ 被阻止的网站（黑名单）',
+        reasonWhitelist: '🔒 不允许（仅白名单）',
+        btnBack: '返回',
+        footer: 'BrowseGuard - 高级保护',
+        loading: '加载中...'
+      }
+    };
+
+    const t = translations[lang] || translations.en;
+
+    // تحديث النصوص
+    document.getElementById('title').textContent = t.title;
+    document.getElementById('message').textContent = 
+      reason === 'blacklist' ? t.messageBlacklist : t.messageWhitelist;
+    document.getElementById('blockedUrl').textContent = decodeURIComponent(blockedUrl);
+    document.getElementById('reason').textContent = 
+      reason === 'blacklist' ? t.reasonBlacklist : t.reasonWhitelist;
+    document.getElementById('btnBack').textContent = t.btnBack;
+    document.getElementById('footerText').textContent = t.footer;
+
+    // تغيير الأيقونة حسب السبب
+    document.getElementById('iconEmoji').textContent = reason === 'blacklist' ? '🚫' : '🔒';
+
+    // تغيير الاتجاه حسب اللغة
+    if (lang === 'ar') {
+      document.body.dir = 'rtl';
+    } else {
+      document.body.dir = 'ltr';
+    }
+
+    // تحديث العنوان
+    document.title = t.title + ' - BrowseGuard';
+
+    function goBack() {
+      if (window.history.length > 1) {
+        window.history.back();
+      } else {
+        window.close();
+      }
+    }
+  </script>
+</body>
+</html>

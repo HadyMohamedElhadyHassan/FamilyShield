@@ -1,0 +1,17 @@
+{
+  "manifest_version": 3,
+  "name": "FamilyShield",
+  "version": "1.3",
+  "description": "نظام تتبع الروابط المتقدم مع حماية أمنية مشددة",
+  "permissions": ["storage", "tabs"],
+  "action": {
+    "default_popup": "popup.html"
+  },
+  "background": {
+    "service_worker": "background.js"
+  },
+  "icons": {
+    "128": "icon.png"
+  },
+  "incognito": "split"
+}
