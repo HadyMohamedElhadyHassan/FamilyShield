@@ -1,5 +1,5 @@
 # 🛡️ BrowseGuard - Advanced Browser Tracking & Protection Extension 
-
+ 
 <div align="center"> 
 
 ![Version](https://img.shields.io/badge/version-1.3-blue.svg)
@@ -301,6 +301,7 @@ This extension was developed as an educational project to demonstrate:
 ⭐ If you like this project, give it a star! ⭐
 
 </div>
+
 
 
 
