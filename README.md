@@ -1,4 +1,4 @@
-# 🛡️ BrowseGuard - Advanced Browser Tracking & Protection Extension
+# 🛡️ BrowseGuard - Advanced Browser Tracking & Protection Extension 
 
 <div align="center">
 
@@ -301,6 +301,7 @@ This extension was developed as an educational project to demonstrate:
 ⭐ If you like this project, give it a star! ⭐
 
 </div>
+
 
 
 
