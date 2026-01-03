@@ -14,7 +14,7 @@
 </div>
 
 ---
-
+  
 ## 📋 Overview
 
 **BrowseGuard** is a comprehensive browser tracking and security extension designed to help users monitor their browsing habits, protect their privacy, and control internet access. Perfect for parents monitoring children's online activity, productivity tracking, or personal browsing analytics.
@@ -301,6 +301,7 @@ This extension was developed as an educational project to demonstrate:
 ⭐ If you like this project, give it a star! ⭐
 
 </div>
+
 
 
 
